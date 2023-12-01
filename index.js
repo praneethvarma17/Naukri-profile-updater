@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { CronJob } = require('cron');
+const argv = require('minimist')(process.argv.slice(2));
 
 const job = new CronJob(
   '58 9 * * 1,2,3,4,5',
@@ -23,8 +24,8 @@ const job = new CronJob(
 
     const [response2] = await Promise.all([
       page.waitForNavigation(), // The promise resolves after navigation has finished
-      await page.type('input#usernameField', 'YOUR_USERNAME'), // Clicking the link will indirectly cause a navigation
-      await page.type('input#passwordField', 'YOUR_PASSWORD'), // Clicking the link will indirectly cause a navigation
+      await page.type('input#usernameField', argv.username || argv.u), // Clicking the link will indirectly cause a navigation
+      await page.type('input#passwordField', argv.password || argv.p), // Clicking the link will indirectly cause a navigation
       await page.click('button.waves-effect.waves-light.btn-large.btn-block.btn-bold.blue-btn.textTransform')
     ]);
 
@@ -63,9 +64,3 @@ const job = new CronJob(
 )
 
 job.start()
-
-  // '#black-topbar > div > ul > li:nth-child(8) > a'
-
-  // #pane-side > div:nth-child(1) > div > div > div:nth-child(1)
-  // /html/body/div[1]/div/div/div[4]/div/div[2]/div[1]/div/div/div[1]
-  // '#main > footer > div._2lSWV._3cjY2.copyable-area > div > span:nth-child(2) > div > div._1VZX7 > div._3Uu1_ > div > div.to2l77zo.gfz4du6o.ag5g9lrv.bze30y65.kao4egtt > p'/
